@@ -43,6 +43,10 @@ import (
 	"os"
 )
 
+// version is stamped in at build time by build.bat's release option
+// (-ldflags "-X main.version=v1.0.0"). Debug builds leave it as "dev".
+var version = "dev"
+
 func main() {
 	var dirValue string
 	const dirUsage = "directory (or a file path inside it) containing the .md files to convert; aliases: -dir -in -indir -i"
@@ -58,7 +62,13 @@ func main() {
 	flag.StringVar(&outValue, "o", "", outUsage)
 
 	configFlag := flag.Bool("config", false, "write a template content.yaml and exit; can only be combined with the -dir/-in/... and -out/-outdir/... aliases")
+	versionFlag := flag.Bool("version", false, "print the version and exit")
 	flag.Parse()
+
+	if *versionFlag {
+		fmt.Println("mdpub", version)
+		return
+	}
 
 	if *configFlag {
 		combinedWithOther := false

@@ -4,7 +4,7 @@ A small Go CLI that turns a directory of Markdown files into a single, well-form
 
 No servers, no config beyond one optional YAML file, no loose intermediate files. Point it at a folder of `.md` files and get one `.epub` out.
 
-This tool was made with **Claude**.
+This tool was made with the assistance of **Claude**.
 
 ## Features
 
@@ -29,6 +29,8 @@ Requires Go 1.22+.
 ```sh
 go build -o mdpub.exe .
 ```
+
+On Windows, `build.bat` asks for a debug or release build. A release build asks for a version (e.g. `v1.0.0`; the leading `v` is added if you leave it off) and stamps it into the exe. Check it with `mdpub.exe -version`; debug builds report `dev`.
 
 ## Usage
 
@@ -55,6 +57,7 @@ mdpub.exe -config -dir ./my-book
 |---|---|---|
 | `-dir` | `-in`, `-indir`, `-i` | Directory containing the `.md` files. Also accepts a file path inside that directory — its parent is used. Defaults to the current directory. |
 | `-out` | `-outdir`, `-o` | Where to write the `.epub`. A directory (created if needed) gets `<title>.epub` inside it; a specific file path is used exactly as given. Defaults to `<title>.epub` in the current directory. |
+| `-version` | | Prints the version and exits. |
 | `-config` | | Writes a starter `content.yaml` and exits (doesn't build an epub). Uses whichever of `-dir`/`-out` is given, preferring `-dir` if both are, falling back to the current directory if neither is. Refuses to overwrite an existing `content.yaml`. |
 
 Characters that are illegal in file names (`: ? / \ *` and friends) are replaced with `_` in the generated `<title>.epub` name.
